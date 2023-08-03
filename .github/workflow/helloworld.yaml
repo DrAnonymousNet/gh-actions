@@ -2,9 +2,11 @@ Hello World
 
 on:
   push:
-    branch: master
+    branches: 
+      - master
   pull_request:
-    branch: master
+    branches: 
+      - master
   workflow_dispatch:
 
 jobs:
