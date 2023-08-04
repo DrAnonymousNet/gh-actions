@@ -21,7 +21,7 @@ jobs:
 
       - name: Save an Environment v version as output
         run: |
-          DRA_ENV = "This is from GA"
+          DRA_ENV="This is from GA"
           echo "::set-output name=draenv::$DRA_ENV"
 
       - name: Save Timestamp as State
