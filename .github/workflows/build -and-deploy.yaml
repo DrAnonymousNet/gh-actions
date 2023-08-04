@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Go App
-        run: ./dra-app'
+        run: './dra-app'
       
       - name: Retrieve the Timestamp
         run: |
