@@ -18,7 +18,13 @@ jobs:
       - name: Build Go App
         run: go build -o dra_app main.go
 
-      - name: Save an Environment v version as output
+      - name: Save the binary as an artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: dra_app-binary
+          path: dra_app
+
+      - name: Save an Environment version as output
         run: |
           DRA_ENV="This is from GA"
           echo "::set-output name=draenv::$DRA_ENV"
@@ -32,8 +38,14 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download Artifact
+        uses: actions/download_artifact@v3
+        with:
+          name: dra_app-binary
+          
       - name: Deploy Go App
         run: ./dra_app
+        
       
       - name: Retrieve the Timestamp
         run: |
