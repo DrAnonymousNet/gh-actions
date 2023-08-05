@@ -33,16 +33,15 @@ jobs:
         run: |
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           echo "::save-state name=build_timestamp::$TIMESTAMP"
+      - name: Set Go version as env value 
+        run: echo "::set-env name=GO_VERSION::$(go version | awk '{print $3}')"
 
-      - name: Install jq and add to PATH
-        run: |
-          sudo apt-get update
-          sudo apt-get install jq -y
-          echo "::add-path::/usr/bin"
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: always()  # Ensure the job runs always, regardless of the first job's status
+
     steps:
       - name: Download Artifact
         uses: actions/download-artifact@v2
@@ -55,12 +54,17 @@ jobs:
       - name: Deploy Go App
         run: ./dra_app
         
-      
       - name: Retrieve the Timestamp
         run: |
           TIMESTAMP=${{needs.build.outputs.build_timestamp}}
           DRA_ENV=${{needs.build.outputs.draenv}}
           echo "Deployment completed at timestamp $TIMESTAMP and environment variable $DRA_ENV was setus"
+
+      - name: Install jq and add to PATH
+        run: |
+          sudo apt-get update
+          sudo apt-get install jq -y
+          echo "::add-path::/usr/bin"
 
     
     
