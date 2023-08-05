@@ -39,7 +39,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Artifact
-        uses: actions/download_artifact@v3
+        uses: actions/download_artifact@v2
         with:
           name: dra_app-binary
           
