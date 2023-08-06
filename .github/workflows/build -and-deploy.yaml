@@ -18,23 +18,24 @@ jobs:
       - name: Build Go App
         run: go build -o dra_app main.go
 
-      - name: Save the binary as an artifact
+      - name: Save the Binary as an Artifact
         uses: actions/upload-artifact@v3
         with:
           name: dra_app-binary
           path: dra_app
 
-      - name: Save an Environment version as output
+      - name: Save an Environment Variable as output
         run: |
           DRA_ENV="This is from GA"
-          echo "::set-output name=draenv::$DRA_ENV"
+          echo "draenv=$DRA_ENV" >> $GITHUB_OUTPUT
 
       - name: Save Timestamp as State
         run: |
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "::save-state name=build_timestamp::$TIMESTAMP"
-      - name: Set Go version as env value 
-        run: echo "::set-env name=GO_VERSION::$(go version | awk '{print $3}')"
+          echo "build_timestamp=$TIMESTAMP" >> $GITHUB_STATE
+
+      - name: Set Go version as an Env Value 
+        run: echo "GO_VERSION=$(go version | awk '{print $3}')" >> $GITHUB_ENV
 
 
   deploy:
@@ -44,11 +45,11 @@ jobs:
 
     steps:
       - name: Download Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: dra_app-binary
       
-      - name: Set executable permissions
+      - name: Set Executable Permissions
         run: chmod +x dra_app
  
       - name: Deploy Go App
@@ -60,15 +61,8 @@ jobs:
           DRA_ENV=${{needs.build.outputs.draenv}}
           echo "Deployment completed at timestamp $TIMESTAMP and environment variable $DRA_ENV was setus"
 
-      - name: Install jq and add to PATH
+      - name: Install jq and Add it to PATH
         run: |
           sudo apt-get update
           sudo apt-get install jq -y
-          echo "::add-path::/usr/bin"
-
-    
-    
-        
-
-
-      
+          echo "/usr/bin" >> $GITHUB_PATH
