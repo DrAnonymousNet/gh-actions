@@ -27,14 +27,14 @@ jobs:
       - name: Save an Environment version as output
         run: |
           DRA_ENV="This is from GA"
-          echo "::set-output name=draenv::$DRA_ENV"
+          echo "draenv=$DRA_ENV"
 
       - name: Save Timestamp as State
         run: |
           TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "::save-state name=build_timestamp::$TIMESTAMP"
+          echo "=save-state name=build_timestamp::$TIMESTAMP"
       - name: Set Go version as env value 
-        run: echo "::set-env name=GO_VERSION::$(go version | awk '{print $3}')"
+        run: echo "=set-env name=GO_VERSION::$(go version | awk '{print $3}')"
 
 
   deploy:
@@ -64,7 +64,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install jq -y
-          echo "::add-path::/usr/bin"
+          echo "=add-path::/usr/bin"
 
     
     
