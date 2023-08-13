@@ -66,3 +66,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install jq -y
           echo "/usr/bin" >> $GITHUB_PATH
+
+      - name: Read Package Version
+        uses: tyankatsu0105/read-package-version-actions@v1
