@@ -9,5 +9,5 @@ jobs:
   my_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Package Version
-        uses: tyankatsu0105/read-package-version-actions@v1
+      - name: Setup Python
+        uses: actions/setup-python@v3
