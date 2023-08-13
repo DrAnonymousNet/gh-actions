@@ -9,5 +9,5 @@ jobs:
   my_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Read Package Version
-        uses: tyankatsu0105/read-package-version-actions@v1
+      - name: Package Release
+        uses: ncipollo/release-action@v1
