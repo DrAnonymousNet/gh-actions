@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Python 3.10
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@bdd6409dc13e625e6c1c0ad857bd591804786f7b
         with:
             python-version: "3.10"
