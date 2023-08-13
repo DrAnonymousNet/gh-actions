@@ -2,34 +2,12 @@
 name: My Workflow
 
 on:
-  push:
-    branches:
-      - main
+
   workflow_dispatch:
 
 jobs:
   my_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Log untrusted data
-        run: |
-          # Using the getInput function to get user input
-          # The user will be prompted to provide a value for 'input_param'
-          # The value will be stored in the INPUT_PARAM variable
-          INPUT_PARAM=$(echo "${{ inputs.input_param }}")
-          # Using the setOutput function to set an output variable
-          # In this case, the 'output_param' will be available for use in subsequent steps
-          echo "::set-output name=output_param::$INPUT_PARAM"
-          # Using the warning function to print a warning message
-          echo "This is a warning!"
-          echo "::warning::This is a warning message displayed by GitHub Actions."
-          # Using the debug function to print a debug message (visible in the logs only if debugging is enabled)
-          echo "This is a debug message!"
-          echo "::debug::This is a debug message displayed by GitHub Actions."
-      - name: Use output in next step
-        run: |
-          # Using the getOutput function to retrieve the value set in the previous step
-          # The value of 'output_param' will be stored in the OUTPUT_PARAM variable
-          OUTPUT_PARAM=$(echo "${{ steps.log_data.outputs.output_param }}")
-          # Using the exported output in the next step
-          echo "Output from previous step: $OUTPUT_PARAM"
+      - name: Read Package Version
+        uses: tyankatsu0105/read-package-version-actions@v1
